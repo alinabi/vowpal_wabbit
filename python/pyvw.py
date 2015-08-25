@@ -598,4 +598,12 @@ class example(pylibvw.example):
         the corresponding label structure for this example."""
         return label_class(self)
 
+    def get_topics(self):
+        """Return a vector of LDA topic weights for this example"""
+        n = self.vw.lda()
+        if n > 0:
+            return [self.get_topic_prediction(i) for i in range(n)]
+        else:
+            return None
+
 #help(example)
