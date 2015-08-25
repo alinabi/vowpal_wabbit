@@ -38,6 +38,10 @@ void my_finish(vw_ptr all) {
   VW::finish(*all, false);  // don't delete all because python will do that for us!
 }
 
+int my_lda(vw_ptr all) {
+  return all->lda;
+}
+
 search_ptr get_search_ptr(vw_ptr all) {
   return boost::shared_ptr<Search::search>((Search::search*)(all->searchstr), dont_delete_me);
 }
@@ -569,6 +573,8 @@ BOOST_PYTHON_MODULE(pylibvw) {
 
       .def("get_search_ptr", &get_search_ptr, "return a pointer to the search data structure")
       .def("audit_example", &my_audit_example, "print example audit information")
+
+      .def("lda", &my_lda, "return the number of LDA topics in the model")
 
       .def_readonly("lDefault", lDEFAULT, "Default label type (whatever vw was initialized with) -- used as input to the example() initializer")
       .def_readonly("lBinary", lBINARY, "Binary label type -- used as input to the example() initializer")
